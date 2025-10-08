@@ -1,0 +1,25 @@
+﻿@page "/lista"
+@using MauiApp2.Components.Model
+
+<h3>Lista de cadastro</h3>
+
+<table>
+	<thead>
+		<tr>
+			<th>Nome</th>
+			<th>Cpf</th>
+			<th>Telefone</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>@Cliente.UltimoCliente.nome</td>
+			<td>@Cliente.UltimoCliente.cpf</td>
+			<td>@Cliente.UltimoCliente.telefone</td>
+ 		</tr>
+	</tbody>
+</table>
+
+@code {
+
+}
