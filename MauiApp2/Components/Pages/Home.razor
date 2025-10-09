@@ -1,7 +1,7 @@
 ﻿@page "/"
 @inject NavigationManager Navigation
 @using MauiApp2.Components.Model
-
+@using MauiApp2.Components.DAO
 
 <h1>Hello, world!</h1>
 
@@ -25,12 +25,12 @@
 </EditForm>
 
 @code{
-
-	Cliente novoCliente = new Cliente();
+	Cliente novoCliente = new();
 
 	private void SalvarCliente()
 	{
-		Cliente.UltimoCliente = novoCliente;
+		//Cliente.UltimoCliente = novoCliente;
+		new ClienteDAO().SalvarCliente(novoCliente);
 	}
 
 	private void lista()
