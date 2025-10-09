@@ -5,12 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySqlConnector;
+using MauiApp2.Components.Pages;
+using System.Linq.Expressions;
 
 namespace MauiApp2.Components.DAO
 {
     public class ClienteDAO
     {
-        public async Task<bool > SalvarCliente(Cliente novoCliente)
+        public async Task<bool> SalvarCliente(Cliente novoCliente)
         {
             try
             {
@@ -31,12 +33,42 @@ namespace MauiApp2.Components.DAO
                 int rows = await cmd.ExecuteNonQueryAsync();
 
                 return rows > 0;
-
             }
 
             catch (Exception ex)
             {
                 return false;
+            }
+        }
+        public async Task<List<Cliente>> ListarClientes()
+        {
+            try
+            {
+                var Lista = new List<Cliente>();
+
+                string connectionString = "server=localhost;user=root;password=root;database=db_empresa_1";
+                await using var conn = new MySqlConnection(connectionString);
+                string sql = "SELECT * FROM cliente";
+
+                await using var cmd = new MySqlCommand(sql, conn);
+                await using var reader = await cmd.ExecuteReaderAsync();
+
+                while (await reader.ReadAsync())
+                {
+                    var cliente = new Cliente()
+                    {
+                        nome = reader.GetString(1),
+                        cpf = reader.GetString(2),
+                        telefone = reader.GetString(3)
+                    };
+
+                    Lista.Add(cliente);
+                }
+                return Lista;
+            }
+            catch (Exception ex)
+            {
+                return new List<Cliente>();
             }
         }
     }
