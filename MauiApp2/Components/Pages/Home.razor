@@ -10,13 +10,13 @@
 	<ValidationSummary />
 
 	<label for="nome" >Nome:</label>
-	<InputText id="nome" @bind-Value="novoCliente.nome" /><br><br>
+	<InputText id="nome" @bind-Value="novoCliente.nome" required /><br />
 
 	<label for="cpf">cpf:</label>
-	<InputText id="cpf" @bind-Value="novoCliente.cpf" /><br><br>
+	<InputText id="cpf" @bind-Value="novoCliente.cpf" required /><br /> 
 
 	<label for="telefone">telefone:</label>
-	<InputText id="telefone" @bind-Value="novoCliente.telefone" />
+	<InputText id="telefone" @bind-Value="novoCliente.telefone" required /><br />
 	
 	<br>
 	<button type="submit">Enviar</button>
