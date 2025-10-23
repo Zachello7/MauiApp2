@@ -20,7 +20,7 @@
 					<td>@cliente.nome</td>
 					<td>@cliente.cpf</td>
 					<td>@cliente.telefone</td>
-					<button class="btn btn-outline-danger" > Excluir</button>
+					<button class="btn btn-outline-danger" "@onclick=" > Excluir</button>
 				}
 			}
 
@@ -30,12 +30,22 @@
 
 @code {
 	List<Cliente> lista = new();
+
 	private async Task OnInitializedAsync()
 	{
 		lista = await new ClienteDAO().ListarCliente();
 
 	}
 
-	private void 
+	private async Task DeleteId(int id)
+	{
+		await new ClienteDAO().ExcluirCliente(id);
+		lista = await new ClienteDAO().ListarCliente();
+	}
+
+	private async Task BuscarClientePorId(int id)
+	{
+		Navigation
+	}
 
 }

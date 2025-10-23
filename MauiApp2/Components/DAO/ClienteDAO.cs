@@ -76,16 +76,54 @@ namespace MauiApp2.Components.DAO
 
         public async Task ExcluirCliente(int id)
         {
-            string connectionString = "server=localhost;user=root;password=root;database=db_empresa_1";
+            try
+            {
+                string connectionString = "server=localhost;user=root;password=root;database=db_empresa_1";
 
-            await using var conn = new MySqlConnection(connectionString);
+                await using var conn = new MySqlConnection(connectionString);
 
-            await conn.OpenAsync();
+                await conn.OpenAsync();
 
-            string sql = "Delete FROM cliente WHERE = id= @id";
+                string sql = "Delete FROM cliente WHERE = id= @id";
 
-            await using var cmd = new MySqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@nome", novoCliente.nome);
+                await using var cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@id", id);
+
+                await cmd.ExecuteNonQueryAsync();
+            }        
+            
+            catch 
+            { 
+            
+            }
+        }
+
+        public async Task<Cliente?> BuscarClientePorId(int id)
+        {
+            try
+            {
+                string connectionString = "server=localhost;user=root;password=root;database=db_empresa_1";
+                await using var conn = new MySqlConnection(connectionString);
+                string sql = "SELECT * FROM cliente WHERE id = @id";
+
+                await using var cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("id", id);
+
+                await using var reader = await cmd.ExecuteReaderAsync();
+
+                Cliente cliente = new Cliente()
+                {
+                    id = reader.GetInt32(0),
+                    nome = reader.GetString(1),
+                    cpf = reader.GetString(2)
+                    telefone = reader.GetString(3)
+                };
+
+                return cliente;
+            }
+
+            catch (Exception ex) {
+                return null;
         }
     }
 }
