@@ -41,6 +41,8 @@ namespace MauiApp2.Components.DAO
             }
         }
         public async Task<List<Cliente>> ListarClientes()
+
+
         {
             try
             {
@@ -70,6 +72,20 @@ namespace MauiApp2.Components.DAO
             {
                 return new List<Cliente>();
             }
+        }
+
+        public async Task ExcluirCliente(int id)
+        {
+            string connectionString = "server=localhost;user=root;password=root;database=db_empresa_1";
+
+            await using var conn = new MySqlConnection(connectionString);
+
+            await conn.OpenAsync();
+
+            string sql = "Delete FROM cliente WHERE = id= @id";
+
+            await using var cmd = new MySqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@nome", novoCliente.nome);
         }
     }
 }
