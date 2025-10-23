@@ -13,13 +13,26 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td>@Cliente.UltimoCliente.nome</td>
-			<td>@Cliente.UltimoCliente.cpf</td>
-			<td>@Cliente.UltimoCliente.telefone</td>
+			@if (lista != null)
+			{
+				@foreach (var cliente in lista)
+				{
+					<td>@cliente.nome</td>
+					<td>@cliente.cpf</td>
+					<td>@cliente.telefone</td>
+				}
+			}
+
  		</tr>
 	</tbody>
 </table>
 
 @code {
+	List<Cliente> lista = new();
+	private async Task OnInitializedAsync()
+	{
+		lista = await new ClienteDAO().ListarCliente();
+
+	}
 
 }
