@@ -8,7 +8,7 @@ namespace MauiApp2.Components.Model
 {
     public class Cliente
     {
-        public 
+        public int id;
         public string nome { get; set; } = string.Empty;
         public string cpf { get; set; } = string.Empty;
         public string telefone { get; set; } = string.Empty;

@@ -40,7 +40,7 @@ namespace MauiApp2.Components.DAO
                 return false;
             }
         }
-        public async Task<List<Cliente>> ListarClientes()
+        public async Task<List<Cliente>> ListarCliente()
 
 
         {
@@ -90,11 +90,11 @@ namespace MauiApp2.Components.DAO
                 cmd.Parameters.AddWithValue("@id", id);
 
                 await cmd.ExecuteNonQueryAsync();
-            }        
-            
-            catch 
-            { 
-            
+            }
+
+            catch
+            {
+
             }
         }
 
@@ -115,15 +115,43 @@ namespace MauiApp2.Components.DAO
                 {
                     id = reader.GetInt32(0),
                     nome = reader.GetString(1),
-                    cpf = reader.GetString(2)
+                    cpf = reader.GetString(2),
                     telefone = reader.GetString(3)
                 };
 
                 return cliente;
             }
 
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return null;
+            }
+        }
+
+        public async Task AtualizarCliente(Cliente cliente)
+        {
+            try
+            {
+                string connectionString = "server=localhost;user=root;password=root;database=db_empresa_1";
+
+                await using var conn = new MySqlConnection(connectionString);
+
+                await conn.OpenAsync();
+
+                string sql = "UPDATE cliente SET nome = @nome, cpf = @cpf, telefone = @telefone WHERE id = @id";
+
+                await using var cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@nome", cliente.nome);
+                cmd.Parameters.AddWithValue("@cpf", cliente.cpf);
+                cmd.Parameters.AddWithValue("@telefone", cliente.telefone);
+                cmd.Parameters.AddWithValue("@id", cliente.id);
+
+                int rows = await cmd.ExecuteNonQueryAsync();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

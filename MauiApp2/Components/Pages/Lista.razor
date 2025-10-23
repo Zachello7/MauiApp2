@@ -1,5 +1,6 @@
 ﻿@page "/lista"
 @using MauiApp2.Components.Model
+@using MauiApp2.Components.DAO //
 
 <h3>Lista de cadastro</h3>
 
@@ -12,19 +13,20 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
-			@if (lista != null)
+		@if (lista != null)
+		{
+			@foreach (var cliente in lista)
 			{
-				@foreach (var cliente in lista)
-				{
+				<tr>
 					<td>@cliente.nome</td>
 					<td>@cliente.cpf</td>
 					<td>@cliente.telefone</td>
-					<button class="btn btn-outline-danger" "@onclick=" > Excluir</button>
-				}
+					<td>
+						<button class="btn btn-outline-danger">Excluir</button>
+					</td>
+				</tr>
 			}
-
- 		</tr>
+		}
 	</tbody>
 </table>
 
@@ -34,7 +36,6 @@
 	private async Task OnInitializedAsync()
 	{
 		lista = await new ClienteDAO().ListarCliente();
-
 	}
 
 	private async Task DeleteId(int id)
@@ -45,7 +46,6 @@
 
 	private async Task BuscarClientePorId(int id)
 	{
-		Navigation
+		// Navigation
 	}
-
 }
